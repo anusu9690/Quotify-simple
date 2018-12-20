@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body></body>
+<div id='quote'>
+
+    <a href="random-quote.html">RANDOM QUOTE(API)</a><span> | </span>
+    <a href="random-local.html">RANDOM QUOTE(LOCAL)</a><span> | </span>
+    <a href="add-quote.html">ADD QUOTE</a><span> | </span>
+    <a href="list-all-saved-quotes.html">LIST ALL SAVED QUOTES(LOCAL)</a>
+    <p id='heading'></p>
+    <center><textarea id="textQuote" cols="40" rows="6"></textarea></center></br>
+    <center><textarea id="textAuthor" cols="15" rows="2"></textarea></center>
+
+    <center><button id="save">SAVE</button></center>
+</div>
+
+<script>
+
+
+
+
+    const textQuoteHandle = document.getElementById('textQuote');
+    const textAuthorHandle = document.getElementById('textAuthor');
+    const saveHandle = document.getElementById('save');
+
+
+    saveHandle.addEventListener('click', function () {
+
+        let data = {
+            quote: textQuoteHandle.value,
+            author: textAuthorHandle.value
+        }
+        // localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : [];
+
+        let quote = { quote: data.quote, author: data.author };
+        let quotes = JSON.parse(localStorage.getItem('favs'));
+        quotes.push(quote);
+        localStorage.setItem('favs', JSON.stringify(quotes));
+
+        console.log(localStorage.getItem('favs'));
+        saveHandle.disabled = true;
+        saveHandle.innerText = 'saved';
+    }, false);
+
+
+</script>
+
+</body>
+
+</html>

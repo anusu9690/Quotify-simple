@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body></body>
+<div id='quote'>
+
+    <a href="random-quote.html">RANDOM QUOTE(API)</a><span> | </span>
+    <a href="random-local.html">RANDOM QUOTE(LOCAL)</a><span> | </span>
+    <a href="add-quote.html">ADD QUOTE</a><span> | </span>
+    <a href="list-all-saved-quotes.html">LIST ALL SAVED QUOTES(LOCAL)</a>
+    <p id='heading'></p>
+    <button id="btn">GET ANOTHER QUOTE</button>
+    <button id="saveLocal">SAVE TO LOCAL</button>
+
+</div>
+
+<script>
+
+
+
+    const quoteHandle = document.getElementById('quote');
+    const paraHandle = document.getElementById('heading');
+    const btnHandle = document.getElementById('btn');
+    const saveLocalHandle = document.getElementById('saveLocal');
+    let data;
+
+    //  let quotes = localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : []
+
+    btnHandle.addEventListener('click', function () {
+        saveLocalHandle.disabled = false;
+        saveLocalHandle.innerText = 'SAVE TO LOCAL';
+        newQuote();
+
+    }, false);
+
+
+
+    function newQuote() {
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://talaikis.com/api/quotes/random/');
+        xhr.onload = function () {
+
+            data = JSON.parse(xhr.responseText);
+            paraHandle.innerHTML = `Quote - ${data.quote}</br>Author - ${data.author}`;
+        }
+        xhr.send();
+    }
+
+    saveLocalHandle.addEventListener('click', function () {
+        let quotes = localStorage.getItem('favs') ? JSON.parse(localStorage.getItem('favs')) : [];
+
+        let quote = { quote: data.quote, author: data.author };
+        // let quotes = JSON.parse(localStorage.getItem('favs'));
+        quotes.push(quote);
+        localStorage.setItem('favs', JSON.stringify(quotes));
+
+        console.log(localStorage.getItem('favs'));
+        saveLocalHandle.disabled = true;
+        saveLocalHandle.innerText = 'saved';
+    }, false);
+
+    newQuote();
+
+
+</script>
+
+</body>
+
+</html>

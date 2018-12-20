@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div id='quote'>
+
+        <a href="random-quote.html">RANDOM QUOTE(API)</a>
+        <a href="random-local.html">RANDOM QUOTE(LOCAL)</a>
+        <a href="add-quote.html">ADD QUOTE</a>
+        <a href="list-all-saved-quotes.html">LIST ALL SAVED QUOTES(LOCAL)</a>
+        <p id='heading'></p>
+        <button id="btn">GET ANOTHER QUOTE</button>
+
+
+    </div>
+
+    <script>
+
+
+
+        const quoteHandle = document.getElementById('quote');
+        const paraHandle = document.getElementById('heading');
+        const btnHandle = document.getElementById('btn');
+
+
+        btnHandle.addEventListener('click', function () {
+
+            localQuote();
+
+        }, false);
+
+
+
+        function localQuote() {
+            let data = JSON.parse(localStorage.getItem('favs'));
+
+            const randomQuote = Math.floor(Math.random() * data.length);
+
+            paraHandle.innerHTML = `Quote - ${data[randomQuote].quote}</br>Author - ${data[randomQuote].author}`;
+
+        }
+        localQuote();
+    </script>
+
+</body>
+
+</html>

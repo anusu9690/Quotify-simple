@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body></body>
+<div id='quote'>
+
+    <a href="random-quote.html">RANDOM QUOTE(API)</a><span> | </span>
+    <a href="random-local.html">RANDOM QUOTE(LOCAL)</a><span> | </span>
+    <a href="add-quote.html">ADD QUOTE</a><span> | </span>
+    <a href="list-all-saved-quotes.html">LIST ALL SAVED QUOTES(LOCAL)</a>
+    <p id='heading'></p>
+
+
+</div>
+
+<script>
+    let quoteHandle = document.getElementById('quote');
+    let data = JSON.parse(localStorage.getItem('favs'));
+    console.log(data);
+    /* for (var i = 0; i < data.length; i++) {
+        let pTag = document.createElement('p');
+        let btn = document.createElement('button');
+        btn.setAttribute('id', 'delete');
+        btn.innerText = 'delete';
+        pTag.innerHTML = `${data[i].quote}</br> ${data[i].author}`;
+        pTag.appendChild(btn);
+        quoteHandle.appendChild(pTag);
+    }
+ */
+
+for(let i = 0; i < data.length;i++){
+    let quoteText = document.createTextNode(`${data[i].quote}- ${data[i].author}`);
+    let pTag = document.createElement('p');
+    const deleteButton = document.createElement('button');
+    const editButton = document.createElement('button');
+    const updateButton = document.createElement('button');
+    const cancelButton = document.createElement('button');
+    const deleteText = document.createTextNode('delete');
+    const editText = document.createTextNode('edit');
+    const updateText = document.createTextNode('update');
+    const cancelText = document.createTextNode('cancel');
+    deleteButton.appendChild(deleteText);
+    editButton.appendChild(editText);
+    updateButton.appendChild(updateText);
+    cancelButton.appendChild(cancelText);
+
+    pTag.appendChild(quoteText);
+    pTag.appendChild(deleteButton);
+    pTag.appendChild(editButton);
+    quoteHandle.appendChild(pTag);
+
+    deleteButton.addEventListener('click',function(){
+    if(data[i]){
+        data.splice(i,1);
+    }
+    pTag.removeChild(quoteText);
+    pTag.removeChild(deleteButton);
+
+localStorage.setItem('favs',JSON.stringify(data));
+pTag.removeChild(editButton);
+    })
+    editButton.addEventListener('click',function(){
+              pTag.removeChild(editButton);
+              pTag.removeChild(quoteText);
+              pTag.removeChild(deleteButton);
+
+                const quotearea = document.createElement('textarea');
+                const authArea = document.createElement('textarea');
+
+                const centerTag1 = document.createElement('center');
+                const centerTag2 = document.createElement('center');
+                const centerTag3 = document.createElement('center');
+                quotearea.innerText = `${data[i]['quote']}`;
+                authArea.innerText = `${data[i]['author']}`
+
+                centerTag1.appendChild(quotearea);
+                centerTag2.appendChild(authArea);
+                centerTag3.appendChild(updateButton);
+                centerTag3.appendChild(cancelButton);
+
+                pTag.appendChild(centerTag1);
+                pTag.appendChild(centerTag2);
+                pTag.appendChild(centerTag3);
+
+
+                
+                cancelButton.addEventListener('click',function(){
+                    centerTag1.removeChild(quotearea);
+                    centerTag2.removeChild(authArea);
+                    centerTag3.removeChild(updateButton);
+                    centerTag3.removeChild(cancelButton);
+                    ptag.appendChild(quoteText);
+                },false)
+                
+    
+                updateButton.addEventListener('click',function(){
+                  data[i]['quote'] = `${quotearea.value}`;
+                  data[i]['author'] = `${authArea.value}`;
+                  centerTag1.removeChild(quotearea);
+                  centerTag2.removeChild(authArea);
+                  centerTag3.removeChild(updateButton);
+                  centerTag3.removeChild(cancelButton);
+                  updatedQuote = document.createTextNode(`${quotearea.value}  -  ${authArea.value}`);
+                  pTag.appendChild(updatedQuote);
+                  data.push(updatedQuote);
+                  data.pop();
+                  localStorage.setItem('quotes',JSON.stringify(data));
+                  console.log(data);
+
+
+              },false)
+                
+              },false)
+
+}
+
+
+</script>
+
+</body>
+
+</html>
